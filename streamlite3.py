@@ -1,47 +1,119 @@
 import streamlit as st
-from streamlit_authenticator import Authenticate
+from streamlit_option_menu import option_menu
 
-# Nos données utilisateurs doivent respecter ce format
-lesDonneesDesComptes = {
-    'usernames': {
-        'utilisateur': {
-            'name': 'utilisateur',
-            'password': 'utilisateurMDP',
-            'email': 'utilisateur@gmail.com',
-            'failed_login_attemps': 0,  # Sera géré automatiquement
-            'logged_in': False,          # Sera géré automatiquement
-            'role': 'utilisateur'
-        },
-        'root': {
-            'name': 'root',
-            'password': 'rootMDP',
-            'email': 'admin@gmail.com',
-            'failed_login_attemps': 0,  # Sera géré automatiquement
-            'logged_in': False,          # Sera géré automatiquement
-            'role': 'administrateur'
-        }
+# Configuration de la page
+st.set_page_config(page_title="Mon Application Chat", page_icon="🐱")
+
+# Gestion de l'état de connexion
+if 'logged_in' not in st.session_state:
+    st.session_state.logged_in = False
+if 'username' not in st.session_state:
+    st.session_state.username = ""
+
+# URLs des photos de 3 chats différents
+cat_photos = [
+    {
+        "url": "https://cdn.pixabay.com/photo/2017/07/25/01/22/cat-2536662_1280.jpg",
+        "name": "Misty",
+        "description": "Misty adore se prélasser au soleil"
+    },
+    {
+        "url": "https://cdn.pixabay.com/photo/2015/11/16/22/14/cat-1046544_1280.jpg",
+        "name": "Simba",
+        "description": "Simba est un aventurier curieux"
+    },
+    {
+        "url": "https://cdn.pixabay.com/photo/2018/01/28/12/37/cat-3113513_1280.jpg",
+        "name": "Luna",
+        "description": "Luna a des yeux magnifiques"
     }
-}
+]
 
-authenticator = Authenticate(
-    lesDonneesDesComptes,  # Les données des comptes
-    "cookie name",         # Le nom du cookie, un str quelconque
-    "cookie key",          # La clé du cookie, un str quelconque
-    30,                    # Le nombre de jours avant que le cookie expire
-)
+# Page de connexion
+def login_page():
+    st.title("Login")
+    
+    with st.form("login_form"):
+        username = st.text_input("Username", value="root")
+        password = st.text_input("Password", type="password")
+        submit_button = st.form_submit_button("Login")
+        
+        if submit_button:
+            if username and password:
+                if username == "root" and password == "root":
+                    st.session_state.logged_in = True
+                    st.session_state.username = username
+                    st.rerun()
+                else:
+                    st.error("Identifiants incorrects")
+            else:
+                st.warning("Les champs username et mot de passe doivent être remplis")
 
-authenticator.login()
+# Page d'accueil
+def home_page():
+    st.title("Bienvenue sur ma page")
+    st.header("Accueil")
+    st.write("- Les photos de mon chat")
 
-def accueil():
-      st.title("Bienvenu sur le contenu réservé aux utilisateurs connectés")
+# Page des photos du chat
+def cat_photos_page():
+    st.title("Bienvenue dans l'album de mon chat")
+    st.write("---")
+    
+    if st.button("Déconnexion"):
+        st.session_state.logged_in = False
+        st.session_state.username = ""
+        st.rerun()
+    
+    st.write(f"Bienvenue {st.session_state.username}")
+    
+    # Affichage des 3 chats avec style
+    st.header("Mes trois magnifiques chats")
+    
+    for cat in cat_photos:
+        with st.container():
+            col1, col2 = st.columns([1, 2])
+            with col1:
+                st.image(cat["url"], width=300)
+            with col2:
+                st.subheader(cat["name"])
+                st.write(cat["description"])
+            st.markdown("---")
 
+# Menu de navigation
+def show_navigation():
+    with st.sidebar:
+        selected = option_menu(
+            menu_title=None,
+            options=["Accueil", "Les photos de mon chat"],
+            icons=["house", "images"],
+            default_index=1 if st.session_state.get('current_page') == 'photos' else 0
+        )
+        
+        if selected == "Accueil":
+            st.session_state.current_page = 'home'
+        elif selected == "Les photos de mon chat":
+            st.session_state.current_page = 'photos'
+        
+        st.session_state.selected_page = selected
 
-if st.session_state["authentication_status"]:
-  accueil()
-  # Le bouton de déconnexion
-  authenticator.logout("Déconnexion")
+# Application principale
+def main():
+    if not st.session_state.logged_in:
+        login_page()
+    else:
+        show_navigation()
+        
+        if st.session_state.selected_page == "Accueil":
+            home_page()
+        elif st.session_state.selected_page == "Les photos de mon chat":
+            cat_photos_page()
 
-elif st.session_state["authentication_status"] is False:
-    st.error("L'username ou le password est/sont incorrect")
-elif st.session_state["authentication_status"] is None:
-    st.warning('Les champs username et mot de passe doivent être remplie')
+if __name__ == "__main__":
+    # Initialisation de la page sélectionnée
+    if 'selected_page' not in st.session_state:
+        st.session_state.selected_page = "Accueil"
+    if 'current_page' not in st.session_state:
+        st.session_state.current_page = 'home'
+    
+    main()
