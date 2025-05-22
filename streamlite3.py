@@ -5,8 +5,8 @@ from streamlit_authenticator import Authenticate
 lesDonneesDesComptes = {
     'usernames': {
         'utilisateur': {
-            'name': 'utilisateur',
-            'password': 'utilisateurMDP',
+            'name': 'root',
+            'password': 'root',
             'email': 'utilisateur@gmail.com',
             'failed_login_attemps': 0,  # Sera géré automatiquement
             'logged_in': False,          # Sera géré automatiquement
