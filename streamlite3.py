@@ -72,4 +72,4 @@ if authentication_status:
         # Contenu de la troisième colonne
         with col3:
             st.header("A cat")
-            st.image("https://imgs.search.brave.com/1Ct9Tb0CtT0ZpfAjofmF86YkZdvXrdXCsJd9jqeSWZU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cGhvdG9zLWdyY")
+            st.image("https://imgs.search.brave.com/1Ct9Tb0CtT0ZpfAjofmF86YkZdvXrdXCsJd9jqeSWZU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cGhvdG9zLWdyYXR1/aXRlL2NoYXQtbWln/bm9uLWZhaXNhbnQt/YWN0aXZpdGUtaHVt/YWluZV8yMy0yMTUx/ODc2NDA1LmpwZz9z/ZW1")
