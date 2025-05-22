@@ -33,20 +33,11 @@ authenticator = Authenticate(
 authenticator.login()
 
 def accueil():
-      st.title("Bienvenu sur le contenu réservé aux utilisateurs connectés")
+      st.title("Bienvenue sur le contenu réservé aux utilisateurs connectés")
 
 
 if st.session_state["authentication_status"]:
   accueil()
-  # Le bouton de déconnexion
-  authenticator.logout("Déconnexion")
-
-elif st.session_state["authentication_status"] is False:
-    st.error("L'username ou le password est/sont incorrect")
-elif st.session_state["authentication_status"] is None:
-    st.warning('Les champs username et mot de passe doivent être remplie')
-
-import streamlit as st
 
 # Création de 3 colonnes 
 col1, col2, col3 = st.columns(3)
@@ -65,4 +56,14 @@ with col2:
 with col3:
   st.header("A cat")
   st.image("https://imgs.search.brave.com/1Ct9Tb0CtT0ZpfAjofmF86YkZdvXrdXCsJd9jqeSWZU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cGhvdG9zLWdyYXR1/aXRlL2NoYXQtbWln/bm9uLWZhaXNhbnQt/YWN0aXZpdGUtaHVt/YWluZV8yMy0yMTUx/ODc2NDA1LmpwZz9z/ZW10PWFpc19oeWJy/aWQmdz03NDA")
-  
+
+
+  # Le bouton de déconnexion
+  authenticator.logout("Déconnexion")
+
+elif st.session_state["authentication_status"] is False:
+    st.error("L'username ou le password est/sont incorrect")
+elif st.session_state["authentication_status"] is None:
+    st.warning('Les champs username et mot de passe doivent être remplie')
+
+
