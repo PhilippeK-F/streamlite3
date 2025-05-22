@@ -45,3 +45,24 @@ elif st.session_state["authentication_status"] is False:
     st.error("L'username ou le password est/sont incorrect")
 elif st.session_state["authentication_status"] is None:
     st.warning('Les champs username et mot de passe doivent être remplie')
+
+import streamlit as st
+
+# Création de 3 colonnes 
+col1, col2, col3 = st.columns(3)
+
+# Contenu de la première colonne : 
+with col1:
+  st.header("A cat")
+  st.image("https://static.streamlit.io/examples/cat.jpg")
+
+# Contenu de la deuxième colonne :
+with col2:
+  st.header("A cat")
+  st.image("https://imgs.search.brave.com/mGmdo8ibmzFiwa9AmRm5qk-gb6cJSHY9OGJgQu97UW0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQ0/MzU2Mjc0OC9mci9w/aG90by9taWdub24t/Y2hhdC1naW5nZW1i/cmUuanBnP3M9NjEy/eDYxMiZ3PTAmaz0y/MCZjPXlnTlZWbnFM/azlWOEJXdTRWUTBE/MjF1Ny1kYUl5SFVv/eUtsQ2N4M0sxRTg9")
+
+# Contenu de la troisième colonne : 
+with col3:
+  st.header("A cat")
+  st.image("https://imgs.search.brave.com/1Ct9Tb0CtT0ZpfAjofmF86YkZdvXrdXCsJd9jqeSWZU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cGhvdG9zLWdyYXR1/aXRlL2NoYXQtbWln/bm9uLWZhaXNhbnQt/YWN0aXZpdGUtaHVt/YWluZV8yMy0yMTUx/ODc2NDA1LmpwZz9z/ZW10PWFpc19oeWJy/aWQmdz03NDA")
+  
